@@ -13,7 +13,7 @@
               transition-show="scale"
               transition-hide="scale"
             >
-              <q-date range v-model="selectedDates">
+              <q-date range v-model="selectedDates" mask="YYYY-MM-DD">
                 <div class="row items-center justify-end">
                   <q-btn v-close-popup label="Close" color="primary" flat />
                 </div>
@@ -25,31 +25,46 @@
     </div>
 
     <div>
-      <q-btn class="px-10 bg-sky-500 text-white rounded-full">Search</q-btn>
+      <q-btn
+        class="px-10 bg-sky-500 text-white rounded-full"
+        @click="searchClickHandler"
+        >Search</q-btn
+      >
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue';
+import { useMovieStore } from 'src/stores/movies-store';
+import { DateRange, MoviesService } from 'src/api';
 
 export default defineComponent({
   name: 'SearchBar',
 
   setup() {
-    const selectedDates = ref({
-      from: null,
-      to: null,
-    });
+    const movieStore = useMovieStore();
+
+    const selectedDates = ref<DateRange>();
+    const searchClickHandler = () => {
+      /* Load movies */
+      MoviesService.loadMovies(movieStore.page, selectedDates.value).then(
+        (res) => {
+          movieStore.setMovies(res);
+        }
+      );
+    };
 
     return {
+      searchClickHandler,
+
       selectedDates,
       selectedDatesStr: computed(() => {
-        return selectedDates.value.from === null
+        return selectedDates.value?.from === null
           ? '-'
-          : (selectedDates.value.from ?? '') +
+          : (selectedDates.value?.from ?? '') +
               ' - ' +
-              (selectedDates.value.to ?? '');
+              (selectedDates.value?.to ?? '');
       }),
     };
   },
