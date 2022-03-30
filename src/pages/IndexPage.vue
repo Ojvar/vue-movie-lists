@@ -1,8 +1,6 @@
 <template>
-  <q-page class="columns items-center justify-evenly">
-    <search-bar class="q-my-md"></search-bar>
-    <movies-list></movies-list>
-  </q-page>
+  <search-bar class="mt-10 mb-20"></search-bar>
+  <movies-list></movies-list>
 </template>
 
 <script lang="ts">
@@ -13,9 +11,6 @@ import MoviesList from 'src/components/Movie/MoviesList.vue';
 export default defineComponent({
   name: 'IndexPage',
 
-  components: {
-    SearchBar,
-    MoviesList,
-  },
+  components: { SearchBar, MoviesList },
 });
 </script>
