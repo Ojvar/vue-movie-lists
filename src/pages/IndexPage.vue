@@ -1,0 +1,20 @@
+<template>
+  <q-page class="columns items-center justify-evenly">
+    <search-bar></search-bar>
+    <movies-list></movies-list>
+  </q-page>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import SearchBar from 'src/components/UI/SearchBar.vue';
+import MoviesList from 'src/components/Movie/MoviesList.vue';
+
+export default defineComponent({
+  name: 'IndexPage',
+
+  components: {
+    SearchBar, MoviesList
+  },
+})
+</script>

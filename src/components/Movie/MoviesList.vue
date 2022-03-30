@@ -1,0 +1,48 @@
+<template>
+  <div class="row justify-around">
+    <movie-item
+      class="col col-md-3"
+      v-for="movie in movies"
+      :key="movie.id"
+      :model-value="movie"
+    ></movie-item>
+  </div>
+  <div class="column text-center q-mt-md">
+    <div class="col col-md-12">
+      <q-btn disable flat>Previous Page</q-btn>
+      <q-btn flat color="primary">Next Page</q-btn>
+    </div>
+    <div class="col col-md-12">Showing results 1-20</div>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent, onMounted, computed } from 'vue';
+import MovieItemComponent from './MovieItem.vue';
+import { MovieItem, MoviesService } from 'src/api';
+import { useMovieStore } from 'src/stores/movies-store';
+
+export default defineComponent({
+  name: 'MoviesList',
+  components: { MovieItem: MovieItemComponent },
+
+  setup() {
+    const moviesStore = useMovieStore();
+
+    /* Load movies list at onMounted */
+    onMounted(() => {
+      MoviesService.loadGenres().then(({ genres }) => {
+        moviesStore.setGenres(genres);
+
+        MoviesService.loadMovies(1).then((moviesResult) => {
+          moviesStore.setMovies(moviesResult);
+        });
+      });
+    });
+
+    return {
+      movies: computed<MovieItem[]>(() => moviesStore.results),
+    };
+  },
+});
+</script>
