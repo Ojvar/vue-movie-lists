@@ -1,7 +1,7 @@
 import { get } from './base.service';
 import qs from 'qs';
 
-const apiKey = 'f62f750b70a8ef11dad44670cfb6aa57';
+const apiKey = process.env.API_KEY;
 
 export type MovieGenre = {
   id: number;
