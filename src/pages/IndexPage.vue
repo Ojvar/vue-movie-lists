@@ -1,6 +1,6 @@
 <template>
   <q-page class="columns items-center justify-evenly">
-    <search-bar></search-bar>
+    <search-bar class="q-my-md"></search-bar>
     <movies-list></movies-list>
   </q-page>
 </template>
@@ -14,7 +14,8 @@ export default defineComponent({
   name: 'IndexPage',
 
   components: {
-    SearchBar, MoviesList
+    SearchBar,
+    MoviesList,
   },
-})
+});
 </script>

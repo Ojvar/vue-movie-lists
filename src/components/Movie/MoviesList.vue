@@ -1,12 +1,13 @@
 <template>
-  <div class="row justify-around">
+  <div class="row justify-between q-gutter-sm">
     <movie-item
-      class="col col-md-3"
+      class="col col-md-3 q-mb-md"
       v-for="movie in movies"
       :key="movie.id"
       :model-value="movie"
     ></movie-item>
   </div>
+
   <div class="column text-center q-mt-md">
     <div class="col col-md-12">
       <q-btn disable flat>Previous Page</q-btn>

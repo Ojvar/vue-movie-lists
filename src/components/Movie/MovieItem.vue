@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="row q-pa-xs bg-slate-50 border rounded-md border-slate-100 hover:border-slate-200"
-  >
+  <div class="row q-pa-xs bg-gray-100 border-2 rounded-lg border-gray-200">
     <div class="col col-md-5">
       <q-img
         :ratio="3 / 4"
@@ -13,7 +11,7 @@
 
     <div class="column q-pa-sm col-md-7">
       <div class="col">
-        <h5 class="text-h5">
+        <h5 class="text-h5 font-bold">
           {{ modelValue.title }}
         </h5>
       </div>
