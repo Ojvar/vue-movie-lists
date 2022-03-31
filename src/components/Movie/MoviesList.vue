@@ -10,11 +10,14 @@
     </router-link>
   </div>
 
-  <div class="column text-center q-mt-md">
-    <div class="col col-md-12">
+  <div class="grid grid-cols-2 divide-x divide-gray-300 py-5">
+    <div class="text-right">
       <q-btn :disable="isFirstPage" flat @click="() => setPage(-1)"
         >Previous Page</q-btn
       >
+    </div>
+
+    <div class="text-left">
       <q-btn
         :disable="isLastPage"
         flat
@@ -23,9 +26,10 @@
         >Next Page</q-btn
       >
     </div>
-    <div class="col col-md-12">
-      Showing results {{ resultText }} from {{ total_results }}
-    </div>
+  </div>
+
+  <div class="flex justify-center mb-10">
+    Showing results {{ resultText }} from {{ total_results }}
   </div>
 </template>
 
