@@ -48,6 +48,7 @@ export default defineComponent({
     const selectedDates = ref<DateRange>();
     const searchClickHandler = () => {
       /* Load movies */
+      movieStore.setPage(1);
       MoviesService.loadMovies(movieStore.page, selectedDates.value).then(
         (res) => {
           movieStore.setMovies(res);

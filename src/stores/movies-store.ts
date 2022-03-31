@@ -12,8 +12,7 @@ export const useMovieStore = defineStore('movies', {
 
   getters: {
     isLastPage(): boolean {
-      /* TODO: COMPUTE IS-LAST-PAGE */
-      return false;
+      return this.page === this.total_pages;
     },
 
     isFirstPage(): boolean {
@@ -23,9 +22,18 @@ export const useMovieStore = defineStore('movies', {
     isGenresLoaded(): boolean {
       return undefined !== this.genres;
     },
+
+    currentResult(): string {
+      const start = (this.page - 1) * 20;
+      return `${start + 1} - ${start + 20}`;
+    },
   },
 
   actions: {
+    setPage(newPage: number) {
+      this.page = newPage;
+    },
+
     setGenres(genres: MovieGenre[]) {
       this.genres = genres;
     },

@@ -49,8 +49,8 @@ async function loadMovies(
     include_video: 'false',
     page,
     with_watch_monetization_types: 'flatrate',
-    'release_date.gte': releaseDate?.from,
-    'release_date.lte': releaseDate?.to,
+    'primary_release_date.gte': releaseDate?.from,
+    'primary_release_date.lte': releaseDate?.to,
   };
   const url = `https://api.themoviedb.org/3/discover/movie?${qs.stringify(
     config

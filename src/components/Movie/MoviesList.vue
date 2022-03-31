@@ -10,10 +10,20 @@
 
   <div class="column text-center q-mt-md">
     <div class="col col-md-12">
-      <q-btn disable flat>Previous Page</q-btn>
-      <q-btn flat color="primary">Next Page</q-btn>
+      <q-btn :disable="isFirstPage" flat @click="() => setPage(-1)"
+        >Previous Page</q-btn
+      >
+      <q-btn
+        :disable="isLastPage"
+        flat
+        color="primary"
+        @click="() => setPage(1)"
+        >Next Page</q-btn
+      >
     </div>
-    <div class="col col-md-12">Showing results 1-20</div>
+    <div class="col col-md-12">
+      Showing results {{ resultText }} from {{ total_results }}
+    </div>
   </div>
 </template>
 
@@ -41,8 +51,21 @@ export default defineComponent({
       });
     });
 
+    const setPage = (pagesCount: number) => {
+      MoviesService.loadMovies(moviesStore.page + pagesCount).then(
+        (moviesResult) => {
+          moviesStore.setMovies(moviesResult);
+        }
+      );
+    };
+
     return {
       movies: computed<MovieItem[]>(() => moviesStore.results),
+      isFirstPage: computed(() => moviesStore.isFirstPage),
+      isLastPage: computed(() => moviesStore.isLastPage),
+      resultText: computed(() => moviesStore.currentResult),
+      total_results: computed(() => moviesStore.total_results),
+      setPage,
     };
   },
 });
