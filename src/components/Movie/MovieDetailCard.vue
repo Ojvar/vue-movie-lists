@@ -107,6 +107,9 @@ export default defineComponent({
 
     MoviesService.loadCreditOfMovie(props.modelValue.id)
       .then((res) => {
+        res.cast = res.cast
+          .sort((a, b) => b.popularity - a.popularity)
+          .splice(0, 10);
         credits.value = res;
       })
       .catch(console.error);
