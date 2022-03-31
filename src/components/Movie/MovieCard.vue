@@ -36,7 +36,7 @@ import { defineComponent, PropType, computed } from 'vue';
 import { useMovieStore } from 'src/stores/movies-store';
 
 export default defineComponent({
-  name: 'MovieItem',
+  name: 'MovieCard',
   props: {
     modelValue: {
       type: Object as PropType<MovieItem>,

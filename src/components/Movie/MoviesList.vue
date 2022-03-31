@@ -1,11 +1,13 @@
 <template>
   <div class="row justify-between q-gutter-sm">
-    <movie-item
+    <router-link
       class="col col-md-3 q-mb-md"
+      :to="`/movies/${movie.id}`"
       v-for="movie in movies"
       :key="movie.id"
-      :model-value="movie"
-    ></movie-item>
+    >
+      <movie-card :model-value="movie"></movie-card>
+    </router-link>
   </div>
 
   <div class="column text-center q-mt-md">
@@ -29,13 +31,13 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, computed } from 'vue';
-import MovieItemComponent from './MovieItem.vue';
+import MovieCard from './MovieCard.vue';
 import { MovieItem, MoviesService } from 'src/api';
 import { useMovieStore } from 'src/stores/movies-store';
 
 export default defineComponent({
   name: 'MoviesList',
-  components: { MovieItem: MovieItemComponent },
+  components: { MovieCard },
 
   setup() {
     const moviesStore = useMovieStore();
@@ -45,7 +47,10 @@ export default defineComponent({
       MoviesService.loadGenres().then(({ genres }) => {
         moviesStore.setGenres(genres);
 
-        MoviesService.loadMovies(1).then((moviesResult) => {
+        MoviesService.loadMovies(
+          moviesStore.page,
+          moviesStore.selectedDate
+        ).then((moviesResult) => {
           moviesStore.setMovies(moviesResult);
         });
       });

@@ -51,6 +51,7 @@ export default defineComponent({
       movieStore.setPage(1);
       MoviesService.loadMovies(movieStore.page, selectedDates.value).then(
         (res) => {
+          movieStore.setSelectedDate(selectedDates.value as DateRange);
           movieStore.setMovies(res);
         }
       );

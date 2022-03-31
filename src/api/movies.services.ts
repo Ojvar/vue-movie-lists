@@ -8,6 +8,64 @@ export type MovieGenre = {
   name: string;
 };
 
+export type MovieCredit = {
+  id: number;
+  cast: Array<{
+    adult: boolean;
+    gender: number;
+    id: number;
+    known_for_department: string;
+    name: string;
+    original_name: string;
+    popularity: number;
+    profile_path: string;
+    cast_id: number;
+    character: string;
+    credit_id: string;
+    order: number;
+  }>;
+};
+
+export type MovieDetail = {
+  adult: boolean;
+  backdrop_path: string;
+  belongs_to_collection: null;
+  budget: number;
+  genres: Array<{ id: number; name: string }>;
+  homepage: string;
+  id: number;
+  imdb_id: string;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  production_companies: Array<{
+    id: number;
+    logo_path: string;
+    name: string;
+    origin_country: string;
+  }>;
+  production_countries: Array<{
+    iso_3166_1: string;
+    name: string;
+  }>;
+  release_date: string;
+  revenue: number;
+  runtime: number;
+  spoken_languages: Array<{
+    english_name: string;
+    iso_639_1: string;
+    name: string;
+  }>;
+  status: string;
+  tagline: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+};
+
 export type MovieItem = {
   adult: boolean;
   backdrop_path: string;
@@ -33,8 +91,12 @@ export type LoadMovieResult = {
 };
 
 export type DateRange = {
-  from: Date;
-  to: Date;
+  from: Date | null;
+  to: Date | null;
+};
+
+type LoadGenresResult = {
+  genres: MovieGenre[];
 };
 
 async function loadMovies(
@@ -68,9 +130,42 @@ async function loadMovies(
   });
 }
 
-type LoadGenresResult = {
-  genres: MovieGenre[];
-};
+async function loadMovieDetail(id: string): Promise<MovieDetail> {
+  const config = { api_key: apiKey, language: 'en-US' };
+  const url = `https://api.themoviedb.org/3/movie/${id}?${qs.stringify(
+    config
+  )}`;
+
+  return new Promise((resolve, reject) => {
+    get<MovieDetail>(url)
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+        reject(err);
+      });
+  });
+}
+
+async function loadCreditOfMovie(id: number): Promise<MovieCredit> {
+  const config = { api_key: apiKey, language: 'en-US' };
+  const url = `https://api.themoviedb.org/3/movie/${id}/credits?${qs.stringify(
+    config
+  )}`;
+
+  return new Promise((resolve, reject) => {
+    get<MovieCredit>(url)
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+        reject(err);
+      });
+  });
+}
+
 async function loadGenres(): Promise<LoadGenresResult> {
   const config = { api_key: apiKey, language: 'en-US' };
   const url = `https://api.themoviedb.org/3/genre/movie/list?${qs.stringify(
@@ -89,4 +184,9 @@ async function loadGenres(): Promise<LoadGenresResult> {
   });
 }
 
-export const MoviesService = { loadMovies, loadGenres };
+export const MoviesService = {
+  loadMovies,
+  loadGenres,
+  loadMovieDetail,
+  loadCreditOfMovie,
+};

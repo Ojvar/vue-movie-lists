@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { LoadMovieResult, MovieGenre, MovieItem } from 'src/api';
+import { DateRange, LoadMovieResult, MovieGenre, MovieItem } from 'src/api';
 
 export const useMovieStore = defineStore('movies', {
   state: () => ({
@@ -8,6 +8,10 @@ export const useMovieStore = defineStore('movies', {
     total_pages: 0,
     total_results: 0,
     genres: [] as MovieGenre[],
+    selectedDate: {
+      from: null,
+      to: null,
+    } as DateRange,
   }),
 
   getters: {
@@ -36,6 +40,10 @@ export const useMovieStore = defineStore('movies', {
 
     setGenres(genres: MovieGenre[]) {
       this.genres = genres;
+    },
+
+    setSelectedDate(selectedDate: DateRange) {
+      this.selectedDate = selectedDate;
     },
 
     setMovies(moviesData: LoadMovieResult) {
