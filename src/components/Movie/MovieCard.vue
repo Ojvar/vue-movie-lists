@@ -63,7 +63,7 @@ li {
   list-style: none;
 
   &::after {
-    content: ' * ';
+    content: ' \25CF ';
   }
 
   &:last-child:after {

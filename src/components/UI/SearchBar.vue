@@ -37,6 +37,7 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue';
 import { useMovieStore } from 'src/stores/movies-store';
+import { useUIStore } from 'src/stores/ui-store';
 import { DateRange, MoviesService } from 'src/api';
 
 export default defineComponent({
@@ -44,15 +45,19 @@ export default defineComponent({
 
   setup() {
     const movieStore = useMovieStore();
+    const uiStore = useUIStore();
 
     const selectedDates = ref<DateRange>();
     const searchClickHandler = () => {
+      uiStore.setIsDataLoading(false);
+
       /* Load movies */
       movieStore.setPage(1);
       MoviesService.loadMovies(movieStore.page, selectedDates.value).then(
         (res) => {
           movieStore.setSelectedDate(selectedDates.value as DateRange);
           movieStore.setMovies(res);
+          uiStore.setIsDataLoading(true);
         }
       );
     };
