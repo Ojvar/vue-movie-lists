@@ -1,7 +1,7 @@
 <template>
   <div class="column">
-    <div class="row">
-      <div class="col col-md-3 q-pa-md">
+    <div class="row q-py-md">
+      <div class="col col-md-3 q-py-md">
         <q-img
           width="330px"
           height="495px"
@@ -10,39 +10,52 @@
         ></q-img>
       </div>
 
-      <div class="col col-md-8">
-        <div class="row q-pa-md">
-          <div class="col col-2 q-my-md text-bold">Budget</div>
+      <div class="col col-md-9 q-py-md">
+        <div class="row q-pt-md">
+          <div class="col col-2 text-bold">Budget</div>
           <div class="col col-10 text-right">
             {{ toCurrency(modelValue?.budget) }}
           </div>
+        </div>
 
-          <div class="col col-2 q-my-md text-bold">Revenue</div>
+        <div class="row q-pt-md">
+          <div class="col col-2 text-bold">Revenue</div>
           <div class="col col-10 text-right">
             {{ toCurrency(modelValue?.revenue) }}
           </div>
+        </div>
 
-          <div class="col col-2 q-my-md text-bold">Release Date</div>
+        <div class="row q-pt-md">
+          <div class="col col-2 text-bold">Release Date</div>
           <div class="col col-10 text-right">
             {{ modelValue?.release_date }}
           </div>
+        </div>
 
-          <div class="col col-2 q-my-md text-bold">Runtime</div>
+        <div class="row q-pt-md">
+          <div class="col col-2 text-bold">Runtime</div>
           <div class="col col-10 text-right">
             {{ time_convert(modelValue?.runtime) }}
           </div>
+        </div>
 
-          <div class="col col-2 q-my-md text-bold">Score</div>
+        <div class="row q-pt-md">
+          <div class="col col-2 text-bold">Score</div>
           <div class="col col-10 text-right">
-            {{ modelValue?.vote_average }} ({{ modelValue?.vote_count }} votes)
+            {{ modelValue?.vote_average }} ({{ modelValue?.vote_count }}
+            votes)
           </div>
+        </div>
 
-          <div class="col col-2 q-my-md text-bold">Genres</div>
+        <div class="row q-pt-md">
+          <div class="col col-2 text-bold">Genres</div>
           <div class="col col-10 text-right">
             {{ modelValue?.genres.map((x) => x.name).join(', ') }}
           </div>
+        </div>
 
-          <div class="col col-2 q-my-md text-bold">IMDB Link</div>
+        <div class="row q-pt-md">
+          <div class="col col-2 text-bold">IMDB Link</div>
           <div class="col col-10 text-right">
             <a
               class="underline text-sky-300"
@@ -50,8 +63,10 @@
               >Link</a
             >
           </div>
+        </div>
 
-          <div class="col col-2 q-my-md text-bold">Homepage Link</div>
+        <div class="row q-pt-md">
+          <div class="col col-2 text-bold">Homepage Link</div>
           <div class="col col-10 text-right">
             <a class="underline text-sky-300" :href="modelValue.homepage"
               >Link</a
@@ -61,15 +76,15 @@
       </div>
     </div>
 
-    <div class="row q-pa-md">
+    <div class="row q-pt-md">
       <p class="break-all">{{ modelValue?.overview }}</p>
     </div>
 
-    <div class="row q-pa-md">
-      <div class="col col-md-12">
+    <div class="row q-pt-md">
+      <div class="col col-12">
         <label class="text-bold">Credit:</label>
       </div>
-      <div class="col col-md-12">
+      <div class="col col-12">
         {{ credits?.cast.map((x) => x.name).join(', ') }}
       </div>
     </div>
@@ -94,7 +109,7 @@ export default defineComponent({
       .then((res) => {
         credits.value = res;
       })
-      .catch((err) => console.error);
+      .catch(console.error);
 
     const toCurrency = (value: number) => {
       return (

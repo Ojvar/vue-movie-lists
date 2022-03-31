@@ -2,8 +2,8 @@
   <div class="row q-pa-xs bg-gray-100 border-2 rounded-lg border-gray-200">
     <div class="col col-md-5">
       <q-img
-        :ratio="3 / 4"
-        height="100%"
+        width="125px"
+        height="180px"
         class="fullheight"
         :src="`https://image.tmdb.org/t/p/w500/${modelValue.poster_path}`"
       ></q-img>
