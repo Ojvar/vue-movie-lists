@@ -34,7 +34,8 @@
     </div>
 
     <div class="flex justify-center mb-10">
-      Showing results {{ resultText }} from {{ total_results }}
+      Showing results {{ resultText }}
+      <!-- Showing results {{ resultText }} from {{ total_results }} -->
     </div>
   </div>
 </template>
@@ -72,11 +73,12 @@ export default defineComponent({
     });
 
     const setPage = (pagesCount: number) => {
-      MoviesService.loadMovies(moviesStore.page + pagesCount).then(
-        (moviesResult) => {
-          moviesStore.setMovies(moviesResult);
-        }
-      );
+      MoviesService.loadMovies(
+        moviesStore.page + pagesCount,
+        moviesStore.selectedDate
+      ).then((moviesResult) => {
+        moviesStore.setMovies(moviesResult);
+      });
     };
 
     return {
